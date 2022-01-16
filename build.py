@@ -1,9 +1,9 @@
 #!/bin/python3
 # -*- coding: utf-8 -*-
 
+import datetime
 import os
 import string
-import time
 from collections import defaultdict
 
 import requests
@@ -64,7 +64,7 @@ if r.status_code != 200:
     quit(1)
 r = r.json()
 if "error" in r and r["error"] != "":
-    print(r.text)
+    print(r)
     quit(1)
 
 headers = {
@@ -122,7 +122,9 @@ for encounter in r["data"]["worldData"]["zone"]["encounters"]:
 ####################################################################################################
 
 content = {job_short: job_full for job_full, job_short in JOBS.items()}
-content["NOW"] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+content["NOW"] = datetime.datetime.now(
+    tz=datetime.timezone(datetime.timedelta(hours=9))
+).strftime("%Y-%m-%d %H:%M:%S")
 
 query_body = "\n".join(
     f"""p_{part_str}: zoneRankings(zoneID: {ZONE_ID}, difficulty: 101, includePrivateLogs: true, partition: {part_v})"""
