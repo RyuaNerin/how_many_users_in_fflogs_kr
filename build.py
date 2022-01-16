@@ -55,8 +55,8 @@ r = requests.post(
     proxies=PROXIES,
     data={
         "grant_type": "client_credentials",
-        "client_id": os.getenv("INPUT_OAUTH2_ID"),
-        "client_secret": os.getenv("INPUT_OAUTH2_SECRET"),
+        "client_id": os.getenv("OAUTH2_ID"),
+        "client_secret": os.getenv("OAUTH2_SECRET"),
     },
 )
 if r.status_code != 200:
